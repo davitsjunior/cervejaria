@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "client",
+    "type": "java.lang.String",
+    "description": "A description for 'client'"
+  },
+  {
+    "name": "feign",
+    "type": "java.lang.String",
+    "description": "A description for 'feign'"
+  },
+  {
+    "name": "config",
+    "type": "java.lang.String",
+    "description": "A description for 'config'"
+  },
+  {
+    "name": "default",
+    "type": "java.lang.String",
+    "description": "A description for 'default'"
+  },
+  {
+    "name": "connectTimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'connectTimeout'"
+  },
+  {
+    "name": "readTimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'readTimeout'"
+  },
+  {
+    "name": "loggerLevel",
+    "type": "java.lang.String",
+    "description": "A description for 'loggerLevel'"
+  },
+  {
+    "name": "connectTimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'connectTimeout'"
+  },
+  {
+    "name": "connectTimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'connectTimeout'"
+  }
+]}
