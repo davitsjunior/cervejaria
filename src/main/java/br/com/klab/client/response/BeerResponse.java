@@ -11,5 +11,5 @@ public class BeerResponse {
 
 	//private Long id;
 	private String name;
-	private long ibu;
+	private long ibu; 
 }

@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: beer-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 131625
+      MYSQL_DATABASE: beerdb
+    ports:
+      - "3306:3306"
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - db-data:/var/lib/mysql
+
+  flyway:
+    image: flyway/flyway:6.4.1-alpine
+    depends_on:
+      - mysql-db
+    environment:
+      - FLYWAY_EDITION=community
+    command: -url=jdbc:mysql://mysql-db:3306/beerdb -schemas=flyway -user=root -password=131625 -connectRetries=10 migrate
+    volumes:
+      - ./migrations:/flyway/sql/
+
+
+  app:
+    image: davitsjunior/beer:v1.1
+    container_name: beer-app
+    depends_on:
+    - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/beerdb
+    ports:
+      - "8080:8080"
+
+volumes:
+  db-data:
+
+
+
