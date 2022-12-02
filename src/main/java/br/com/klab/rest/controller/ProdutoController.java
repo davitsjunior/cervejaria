@@ -3,6 +3,7 @@ package br.com.klab.rest.controller;
 import static org.springframework.http.HttpStatus.*;
 
 
+import br.com.klab.kafka.TopicProducer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,21 +21,31 @@ import br.com.klab.service.ProdutoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/produtos")
 @Data
 public class ProdutoController {
-	
-	private final ProdutoService produtoService; 
+	private final ProdutoService produtoService;
 	private final GetProdutoFeing getProdutoFeing;
+
+	private final TopicProducer topicProducer;
 		
 	@PostMapping
 	@ResponseStatus(CREATED)
 	public Produto save() { 
-		
+
 		Produto p = getProdutoFeing.buscarProduto();
 		return produtoService.save(p);
+	}
+
+	@PostMapping("/api")
+	@ResponseStatus(CREATED)
+	public Produto saveOkHttp(@RequestBody @Valid Produto produto) {
+
+		return produtoService.save(produto);
 	}
 	
 	@PutMapping("{id}")
@@ -55,5 +66,10 @@ public class ProdutoController {
 	public ResponseEntity<Produto> findById(@PathVariable Integer id) {
 		
 		return ResponseEntity.ok(produtoService.findById(id));
+	}
+
+	@GetMapping (value = "/send")
+	public void send(){
+		topicProducer.send("Mensagem enviado ao tópico");
 	}
 }
